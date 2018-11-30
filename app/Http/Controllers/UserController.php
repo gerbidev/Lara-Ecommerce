@@ -71,5 +71,4 @@ class UserController extends Controller
         return response()->json($user->orders()->with(['product'])->get());
     }
 
-
 }
