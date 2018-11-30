@@ -37,13 +37,14 @@ return [
 
     'guards' => [
         'web' => [
-//            'driver' => 'session',
-            'driver' => 'passport',    //laravel passport use
+            'driver' => 'session',
             'provider' => 'users',
         ],
 
         'api' => [
-            'driver' => 'token',
+
+            'driver' => 'passport',    //laravel passport use
+//            'driver' => 'token',
             'provider' => 'users',
         ],
     ],
