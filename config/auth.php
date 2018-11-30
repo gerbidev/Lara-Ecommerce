@@ -37,7 +37,8 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'passport',
+//            'driver' => 'session',
+            'driver' => 'passport',    //laravel passport use
             'provider' => 'users',
         ],
 
