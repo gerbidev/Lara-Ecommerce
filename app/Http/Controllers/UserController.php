@@ -15,7 +15,7 @@ class UserController extends Controller
         return response()->json(User::with(['orders'])->get());
     }
 
-    // registra un usuario y genera un token de acceso para el usuario
+    // Se loguea un usuario y genera un token de acceso para el usuario
     public function login(Request $request)
     {
         $status = 401;

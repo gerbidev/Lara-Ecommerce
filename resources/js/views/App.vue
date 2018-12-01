@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top shadow-sm">
             <div class="container">
                 <router-link :to="{name: 'home'}" class="navbar-brand">Laravel Store</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,13 +30,14 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "App",
         data() {
             return {
                 name: null,
                 user_type: 0,
-                isLoggedIn: localStorage.getItem('bigStore.jwt') != null
+                isLoggedIn: localStorage.getItem('Lara-Ecommerce.jwt') != null
             }
         },
         mounted() {
@@ -45,18 +46,18 @@
         methods : {
             setDefaults() {
                 if (this.isLoggedIn) {
-                    let user = JSON.parse(localStorage.getItem('bigStore.user'))
+                    let user = JSON.parse(localStorage.getItem('Lara-Ecommerce.user'))
                     this.name = user.name
                     this.user_type = user.is_admin
                 }
             },
             change() {
-                this.isLoggedIn = localStorage.getItem('bigStore.jwt') != null
+                this.isLoggedIn = localStorage.getItem('Lara-Ecommerce.jwt') != null
                 this.setDefaults()
             },
             logout(){
-                localStorage.removeItem('bigStore.jwt')
-                localStorage.removeItem('bigStore.user')
+                localStorage.removeItem('Lara-Ecommerce.jwt')
+                localStorage.removeItem('Lara-Ecommerce.user')
                 this.change()
                 this.$router.push('/')
             }

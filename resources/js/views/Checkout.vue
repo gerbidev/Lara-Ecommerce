@@ -1,0 +1,106 @@
+<template>
+    <div>
+        <div style="height: 34px;"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <div class="card shadow-lg" style="border:none; border-radius: inherit">
+                        <div class="card-body">
+                            <br></br>
+                            <p align="center">
+                                <img class="rounded" :src="product.image" :alt="product.name" style="width: 300px;">
+                            </p><br>
+                            <span align="center"><h2 v-html="product.name"></h2></span>
+
+                            <p class="text-muted float-left">$ {{product.price}}</p>
+                            <p class="text-muted float-right">Available Units: {{product.units}}</p>
+                            <br>
+                            <hr>
+                            <!--<label class="row">-->
+                                <!--<div class="col">-->
+                                    <span style="padding: 5px">Quantity:   </span>
+                                <!--</div>-->
+                                <!--<div class="col">-->
+                                    <input type="number" name="units" min="1" :max="product.units" v-model="quantity" @change="checkUnits">
+                                <!--</div>-->
+
+                            <!--</label>-->
+
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div v-if="!isLoggedIn">
+                            <h2>You need to login to continue</h2>
+                            <button class="col-md-4 btn btn-primary float-left" @click="login">Login</button>
+                            <button class="col-md-4 btn btn-danger float-right" @click="register">Create an account</button>
+                        </div>
+                        <div v-if="isLoggedIn">
+                            <div class="row">
+                                <label for="address" class="col-md-3 col-form-label">Delivery Address</label>
+                                <div class="col-md-9">
+                                    <input id="address" type="text" class="form-control" v-model="address" required>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="col-md-4 btn btn-sm btn-success float-right" v-if="isLoggedIn" @click="placeOrder">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<script>
+    import axios from 'axios'
+    export default {
+        name: "Checkout",
+        props: ['pid'],
+        data(){
+            return {
+                address : "",
+                quantity : 1,
+                isLoggedIn : null,
+                product : []
+            }
+        },
+        mounted() {
+            this.isLoggedIn = localStorage.getItem('Lara-Ecommerce.jwt') != null
+        },
+        beforeMount() {
+            axios.get(`/api/products/${this.pid}`).then(response => this.product = response.data)
+
+            if (localStorage.getItem('Lara-Ecommerce.jwt') != null) {
+                this.user = JSON.parse(localStorage.getItem('Lara-Ecommerce.user'))
+                axios.defaults.headers.common['Content-Type'] = 'application/json'
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('Lara-Ecommerce.jwt')
+            }
+        },
+        methods : {
+            login() {
+                this.$router.push({name: 'login', params: {nextUrl: this.$route.fullPath}})
+            },
+            register() {
+                this.$router.push({name: 'register', params: {nextUrl: this.$route.fullPath}})
+            },
+            placeOrder(e) {
+                e.preventDefault()
+
+                let address = this.address
+                let product_id = this.product.id
+                let quantity = this.quantity
+
+                axios.post('api/orders/', {address, quantity, product_id})
+                    .then(response => this.$router.push('/confirmation'))
+            },
+            checkUnits(e) {
+                if (this.quantity > this.product.units) {
+                    this.quantity = this.product.units
+                }
+            }
+        }
+
+    }
+</script>
