@@ -1,51 +1,47 @@
 <template>
     <div>
-        <div style="height: 34px;"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-3">
-                    <div class="card shadow-lg" style="border:none; border-radius: inherit">
-                        <div class="card-body">
-                            <br></br>
+        <div style="height: 25px;"></div>
+        <div class="container align-items-center">
+            <div class="row align-content-center">
+                <div class="col-md-5 col-lg-5 col-sm-6 mx-auto">
+                    <div class="card shadow-lg" style="border:none; border-radius: inherit;">
+                        <div class="card-body" style="padding-bottom: 10px; padding-top: 10px">
+                            <br><br>
                             <p align="center">
-                                <img class="rounded" :src="product.image" :alt="product.name" style="width: 300px;">
-                            </p><br>
-                            <span align="center"><h2 v-html="product.name"></h2></span>
+                                <img class="rounded" :src="product.image" :alt="product.name" style="width: 300px; height: 280px;">
+                            </p>
+                            <span align="center"><h3 v-html="product.name"></h3></span>
 
                             <p class="text-muted float-left">$ {{product.price}}</p>
                             <p class="text-muted float-right">Available Units: {{product.units}}</p>
                             <br>
-                            <hr>
-                            <!--<label class="row">-->
-                                <!--<div class="col">-->
-                                    <span style="padding: 5px">Quantity:   </span>
-                                <!--</div>-->
-                                <!--<div class="col">-->
-                                    <input type="number" name="units" min="1" :max="product.units" v-model="quantity" @change="checkUnits">
-                                <!--</div>-->
-
-                            <!--</label>-->
+                            <hr style="margin-bottom: 10px; margin-top: 10px">
+                            <span style="padding: 5px">Quantity:   </span>
+                                <input type="number" name="units" min="1" :max="product.units" v-model="quantity" @change="checkUnits">
 
                         </div>
-                    </div>
-                    <br>
-                    <div>
-                        <div v-if="!isLoggedIn">
-                            <h2>You need to login to continue</h2>
-                            <button class="col-md-4 btn btn-primary float-left" @click="login">Login</button>
-                            <button class="col-md-4 btn btn-danger float-right" @click="register">Create an account</button>
-                        </div>
-                        <div v-if="isLoggedIn">
-                            <div class="row">
-                                <label for="address" class="col-md-3 col-form-label">Delivery Address</label>
-                                <div class="col-md-9">
-                                    <input id="address" type="text" class="form-control" v-model="address" required>
+                        <div class="card-header" style="border: none; padding-top: 1px">
+                            <br>
+                            <div>
+                                <div v-if="!isLoggedIn">
+                                    <h2>You need to login to continue</h2>
+                                    <button class="col-md-4 btn btn-primary float-left" @click="login">Login</button>
+                                    <button class="col-md-4 btn btn-danger float-right" @click="register">Create an account</button>
+                                </div>
+                                <div v-if="isLoggedIn">
+                                    <div class="row">
+                                        <label for="address" class="col-md-3 col-form-label">Delivery Address</label>
+                                        <div class="col-md-9">
+                                            <input id="address" type="text" class="form-control" v-model="address" required>
+                                        </div>
+                                    </div>
+
+                                    <button class="col-md-4 btn btn-sm btn-success float-right" v-if="isLoggedIn" @click="placeOrder">Continue</button>
                                 </div>
                             </div>
-                            <br>
-                            <button class="col-md-4 btn btn-sm btn-success float-right" v-if="isLoggedIn" @click="placeOrder">Continue</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
