@@ -41,7 +41,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -67,6 +66,9 @@
         },
         beforeMount() {
             axios.get(`/api/products/${this.pid}`).then(response => this.product = response.data)
+                .catch(error=>{
+                    console.log(error, "Error inicio beforeMount")
+                })
 
             if (localStorage.getItem('Lara-Ecommerce.jwt') != null) {
                 this.user = JSON.parse(localStorage.getItem('Lara-Ecommerce.user'))
@@ -88,8 +90,16 @@
                 let product_id = this.product.id
                 let quantity = this.quantity
 
-                axios.post('api/orders/', {address, quantity, product_id})
-                    .then(response => this.$router.push('/confirmation'))
+                // axios.post('api/orders/', {address, quantity, product_id})
+                axios.post('api/orders/', {product_id, quantity})
+                    .then(function (response) {
+                        this.$router.push('/confirmation')
+                    })
+                    // .then(response => {this.$router.push('/confirmation')
+                    // })
+                    .catch(error =>{
+                        console.log(error,"Error response ? placeOrder")
+                    })
             },
             checkUnits(e) {
                 if (this.quantity > this.product.units) {

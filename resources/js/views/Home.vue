@@ -9,10 +9,10 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-lg-3 el-col-xs-12" v-for="(product,index) in products" @key="index">
                             <div class="card mb-3 shadow-lg p-3 align-content-center" style="border: none; border-radius: inherit" >
-                                <div class="card-body" style="padding: 0px;">
+                                <div class="card-body" style="padding: 16px;">
                                     <router-link :to="{ path: '/products/'+product.id}">
                                         <p align="center">
-                                            <img class="rounded" :src="product.image" :alt="product.name" style="width: 183px; height: 250px;">
+                                            <img class="rounded" :src="product.image" :alt="product.name" style="width: 183px; height: 230px;">
                                         </p>
                                         <h6 align="center"><span v-html="product.name"></span></h6>
                                         <h5>
@@ -46,10 +46,7 @@
 </script>
 
 <style scoped>
-    .product-box {
-        border:  none;
-        padding: 10px 15px;
-    }
+
     .hero-section {
         height: 15vh;
         background: #fff;
