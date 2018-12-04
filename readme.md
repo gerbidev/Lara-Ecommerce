@@ -45,9 +45,11 @@ First download .zip or clone on your computer.
 ```$ php artisan db:seed```
 
 - Install node modules
+
 ```$ npm install```
 
 - Run the application
+
 ```$ php artisan serve```
 
 
